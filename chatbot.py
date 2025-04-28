@@ -83,7 +83,6 @@ Remember: It is ESSENTIAL that you never introduce vocabulary or grammar that is
 """
 
 # Function to get detailed CEFR level guidelines for each level and language
-# Function to get detailed CEFR level guidelines for each level and language
 def get_cefr_level_guidelines(level_code, language_code):
     """
     Returns detailed guidelines for a specific CEFR level and language
@@ -759,7 +758,7 @@ def process_question(question, session_state):
     # Get current language
     lang_code = session_state.selected_language if hasattr(session_state, 'selected_language') else "fin"
     
-    # 1) Add user question to the chat
+    # Add user question to the chat
     session_state.messages.append({"role": "user", "content": question})
     session_state.chat_history.append({
         "role": "user", 
@@ -769,16 +768,16 @@ def process_question(question, session_state):
         "language": lang_code    # Track language at time of message
     })
     
-    # 2) Extract topics from the user message
+    # Extract topics from the user message
     session_state.user_topics = extract_topics(question, session_state.user_topics)
     
-    # 3) Set chat as started
+    # Set chat as started
     session_state.chat_started = True
     
-    # 4) Get AI response
+    # Get AI response
     response = call_openai_api(session_state)
     
-    # 5) Add assistant response to chat
+    # Add assistant response to chat
     session_state.messages.append({"role": "assistant", "content": response})
     session_state.chat_history.append({
         "role": "assistant", 
@@ -788,7 +787,7 @@ def process_question(question, session_state):
         "language": lang_code    # Track language at time of message
     })
     
-    # 6) Reset level and language change flags if they were set
+    # Reset level and language change flags if they were set
     if hasattr(session_state, 'current_level_changed') and session_state.current_level_changed:
         session_state.current_level_changed = False
     if hasattr(session_state, 'language_changed') and session_state.language_changed:
