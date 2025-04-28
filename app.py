@@ -235,6 +235,57 @@ st.markdown("""
         vertical-align: middle;
         margin-right: 5px;
     }
+    
+    /* Future features styles */
+    .features-heading {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 25px 0 15px 0;
+        color: #333;
+    }
+    
+    /* Coming soon container styles */
+    .coming-soon-container {
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 10px 0;
+        text-align: center;
+        border: 1px dashed #FF9800;
+        background-color: #FFF8E1;
+    }
+    
+    .coming-soon-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #FF9800;
+    }
+    
+    .coming-soon-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #FF9800;
+    }
+    
+    .coming-soon-message {
+        color: #666;
+        margin-bottom: 15px;
+        font-size: 0.95rem;
+    }
+    
+    /* Style the badge */
+    .coming-soon-badge {
+        background-color: #FF9800;
+        color: white;
+        font-size: 10px;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        display: inline-block;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -298,6 +349,55 @@ level_descriptions = {
     "B1 (Intermediate)": "Main points on familiar matters. Simple connected text on familiar topics.",
     "B2 (Upper Intermediate)": "Understanding complex text. Spontaneous interaction with native speakers.",
     "C1 (Advanced)": "Understanding demanding, longer texts. Expressing ideas fluently and spontaneously."
+}
+
+# Define future features to showcase
+future_features = [
+    {
+        "title": "🎙️ Speech Practice",
+        "description": "Practice pronunciation with AI feedback and engage in spoken conversations",
+        "coming_soon": True
+    },
+    {
+        "title": "📊 Progress Analytics",
+        "description": "Track your learning journey with detailed stats and personalized recommendations",
+        "coming_soon": True
+    },
+    {
+        "title": "👥 Language Community",
+        "description": "Connect with other learners and participate in language exchange sessions",
+        "coming_soon": True
+    },
+    {
+        "title": "📚 Content Library",
+        "description": "Access curated reading materials categorized by language and level",
+        "coming_soon": True
+    },
+    {
+        "title": "📱 Mobile & Offline Mode",
+        "description": "Learn on the go with our mobile app and download lessons for offline study",
+        "coming_soon": True
+    },
+    {
+        "title": "🌐 Immersive Learning",
+        "description": "Experience language in context through virtual scenarios and simulations",
+        "coming_soon": True
+    }
+]
+
+# Define detailed descriptions for each feature
+detailed_descriptions = {
+    "🎙️ Speech Practice": "Our AI-powered speech recognition system will analyze your pronunciation and provide real-time feedback to help you sound more like a native speaker. You'll be able to practice conversations, receive personalized pronunciation tips, and track your improvement over time.",
+    
+    "📊 Progress Analytics": "Track your language learning journey with comprehensive analytics. See your vocabulary growth, grammar improvement, time spent practicing, and personalized recommendations for areas to focus on next. Set goals and monitor your progress with beautiful visualizations.",
+    
+    "👥 Language Community": "Connect with fellow language learners and native speakers through our community platform. Join language exchange sessions, participate in group challenges, get feedback on your writing, and make friends with people who share your interest in learning languages.",
+    
+    "📚 Content Library": "Access a vast library of level-appropriate reading materials, videos, podcasts, and exercises. All content is carefully curated and tagged by language level, topic, and grammar concepts to provide you with the perfect learning resources for your current proficiency.",
+    
+    "📱 Mobile & Offline Mode": "Take your language learning anywhere with our mobile app. Download lessons, exercises, and practice materials for offline use when you don't have internet access. Your progress will automatically sync when you reconnect.",
+    
+    "🌐 Immersive Learning": "Experience language in realistic contexts through interactive scenarios and simulations. Practice ordering food at a restaurant, asking for directions, or having a job interview in your target language with our AI-powered virtual environments."
 }
 
 # Initialize session state variables
@@ -453,7 +553,7 @@ with st.sidebar:
         
         # Show preview for image files
         if uploaded_file.type and uploaded_file.type.startswith('image/'):
-            st.image(uploaded_file, caption="Uploaded Image", use_container_width =True)
+            st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
         
         # Process the file if user clicks the button
         if st.button("Process File", key="process_file"):
@@ -564,6 +664,31 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
+# Future features showcase with tabs
+st.markdown("<h2 class='features-heading'>🔮 Future Features</h2>", unsafe_allow_html=True)
+st.markdown("<p style='margin-bottom: 20px;'>Explore upcoming features that will enhance your language learning experience:</p>", unsafe_allow_html=True)
+
+# Create tabs for each feature
+feature_tabs = st.tabs([f"{feature['title']}" for feature in future_features])
+
+# Fill each tab with content
+for i, tab in enumerate(feature_tabs):
+    with tab:
+        feature = future_features[i]
+        tab_title = feature["title"]
+        
+        # Display "coming soon" message
+        st.markdown(f"""
+        <div class="coming-soon-container">
+            <div class="coming-soon-icon">⏳</div>
+            <div class="coming-soon-title">{tab_title} <span class="coming-soon-badge">Coming Soon</span></div>
+            <p class="coming-soon-message">{detailed_descriptions[tab_title]}</p>
+            <p style="font-size: 0.9rem; color: #888;">We're working hard to bring this feature to you. Stay tuned for updates!</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Add a divider after the feature tabs
+st.markdown("<hr style='margin: 25px 0; opacity: 0.2;'>", unsafe_allow_html=True)
 
 # Display chat messages with level indicators
 if st.session_state.messages:
@@ -632,3 +757,4 @@ if user_input:
     # Process the user's question
     process_question(user_input, st.session_state)
     st.rerun()
+
